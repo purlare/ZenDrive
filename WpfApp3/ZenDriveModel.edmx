@@ -1,0 +1,310 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище ZenDriveModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Заявки_на_тест_драйв">
+          <Key>
+            <PropertyRef Name="Код_заявки" />
+          </Key>
+          <Property Name="Код_заявки" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Код_электромобиля" Type="int" Nullable="false" />
+          <Property Name="имя" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="e_mail" Type="varchar" MaxLength="255" />
+          <Property Name="телефон" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="дата_заявки" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Кузов">
+          <Key>
+            <PropertyRef Name="Код_кузова" />
+          </Key>
+          <Property Name="Код_кузова" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Код_электромобиля" Type="int" Nullable="false" />
+          <Property Name="длина" Type="int" Nullable="false" />
+          <Property Name="ширина" Type="int" Nullable="false" />
+          <Property Name="высота" Type="int" Nullable="false" />
+          <Property Name="колесная_база" Type="int" Nullable="false" />
+          <Property Name="шины" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Характеристики">
+          <Key>
+            <PropertyRef Name="Код_характеристики" />
+          </Key>
+          <Property Name="Код_характеристики" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Код_электромобиля" Type="int" Nullable="false" />
+          <Property Name="тип_двигателя" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="мощность_электромотора" Type="int" Nullable="false" />
+          <Property Name="запас_хода" Type="int" Nullable="false" />
+          <Property Name="емкость_батареи" Type="int" Nullable="false" />
+          <Property Name="привод" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Электромобили">
+          <Key>
+            <PropertyRef Name="Код_электромобиля" />
+          </Key>
+          <Property Name="Код_электромобиля" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Название" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Наличие" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Цена" Type="int" Nullable="false" />
+          <Property Name="Фото1" Type="varchar" MaxLength="50" />
+          <Property Name="Фото2" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK__Заявки_на__Код_э__47DBAE45">
+          <End Role="Электромобили" Type="Self.Электромобили" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Заявки_на_тест_драйв" Type="Self.Заявки_на_тест_драйв" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Электромобили">
+              <PropertyRef Name="Код_электромобиля" />
+            </Principal>
+            <Dependent Role="Заявки_на_тест_драйв">
+              <PropertyRef Name="Код_электромобиля" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Кузов__Код_элект__412EB0B6">
+          <End Role="Электромобили" Type="Self.Электромобили" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Кузов" Type="Self.Кузов" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Электромобили">
+              <PropertyRef Name="Код_электромобиля" />
+            </Principal>
+            <Dependent Role="Кузов">
+              <PropertyRef Name="Код_электромобиля" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Характери__Код_э__3B75D760">
+          <End Role="Электромобили" Type="Self.Электромобили" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Характеристики" Type="Self.Характеристики" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Электромобили">
+              <PropertyRef Name="Код_электромобиля" />
+            </Principal>
+            <Dependent Role="Характеристики">
+              <PropertyRef Name="Код_электромобиля" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище ZenDriveModelContainer">
+          <EntitySet Name="Заявки_на_тест_драйв" EntityType="Self.Заявки_на_тест_драйв" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Кузов" EntityType="Self.Кузов" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Характеристики" EntityType="Self.Характеристики" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Электромобили" EntityType="Self.Электромобили" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Заявки_на__Код_э__47DBAE45" Association="Self.FK__Заявки_на__Код_э__47DBAE45">
+            <End Role="Электромобили" EntitySet="Электромобили" />
+            <End Role="Заявки_на_тест_драйв" EntitySet="Заявки_на_тест_драйв" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Кузов__Код_элект__412EB0B6" Association="Self.FK__Кузов__Код_элект__412EB0B6">
+            <End Role="Электромобили" EntitySet="Электромобили" />
+            <End Role="Кузов" EntitySet="Кузов" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Характери__Код_э__3B75D760" Association="Self.FK__Характери__Код_э__3B75D760">
+            <End Role="Электромобили" EntitySet="Электромобили" />
+            <End Role="Характеристики" EntitySet="Характеристики" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ZenDriveModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Заявки_на_тест_драйв">
+          <Key>
+            <PropertyRef Name="Код_заявки" />
+          </Key>
+          <Property Name="Код_заявки" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Код_электромобиля" Type="Int32" Nullable="false" />
+          <Property Name="имя" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="e_mail" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="телефон" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="дата_заявки" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="Электромобили" Relationship="Self.FK__Заявки_на__Код_э__47DBAE45" FromRole="Заявки_на_тест_драйв" ToRole="Электромобили" />
+        </EntityType>
+        <EntityType Name="Кузов">
+          <Key>
+            <PropertyRef Name="Код_кузова" />
+          </Key>
+          <Property Name="Код_кузова" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Код_электромобиля" Type="Int32" Nullable="false" />
+          <Property Name="длина" Type="Int32" Nullable="false" />
+          <Property Name="ширина" Type="Int32" Nullable="false" />
+          <Property Name="высота" Type="Int32" Nullable="false" />
+          <Property Name="колесная_база" Type="Int32" Nullable="false" />
+          <Property Name="шины" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Электромобили" Relationship="Self.FK__Кузов__Код_элект__412EB0B6" FromRole="Кузов" ToRole="Электромобили" />
+        </EntityType>
+        <EntityType Name="Характеристики">
+          <Key>
+            <PropertyRef Name="Код_характеристики" />
+          </Key>
+          <Property Name="Код_характеристики" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Код_электромобиля" Type="Int32" Nullable="false" />
+          <Property Name="тип_двигателя" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="мощность_электромотора" Type="Int32" Nullable="false" />
+          <Property Name="запас_хода" Type="Int32" Nullable="false" />
+          <Property Name="емкость_батареи" Type="Int32" Nullable="false" />
+          <Property Name="привод" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Электромобили" Relationship="Self.FK__Характери__Код_э__3B75D760" FromRole="Характеристики" ToRole="Электромобили" />
+        </EntityType>
+        <EntityType Name="Электромобили">
+          <Key>
+            <PropertyRef Name="Код_электромобиля" />
+          </Key>
+          <Property Name="Код_электромобиля" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Название" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Наличие" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Цена" Type="Int32" Nullable="false" />
+          <Property Name="Фото1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Фото2" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Заявки_на_тест_драйв" Relationship="Self.FK__Заявки_на__Код_э__47DBAE45" FromRole="Электромобили" ToRole="Заявки_на_тест_драйв" />
+          <NavigationProperty Name="Кузов" Relationship="Self.FK__Кузов__Код_элект__412EB0B6" FromRole="Электромобили" ToRole="Кузов" />
+          <NavigationProperty Name="Характеристики" Relationship="Self.FK__Характери__Код_э__3B75D760" FromRole="Электромобили" ToRole="Характеристики" />
+        </EntityType>
+        <Association Name="FK__Заявки_на__Код_э__47DBAE45">
+          <End Role="Электромобили" Type="Self.Электромобили" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Заявки_на_тест_драйв" Type="Self.Заявки_на_тест_драйв" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Электромобили">
+              <PropertyRef Name="Код_электромобиля" />
+            </Principal>
+            <Dependent Role="Заявки_на_тест_драйв">
+              <PropertyRef Name="Код_электромобиля" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Кузов__Код_элект__412EB0B6">
+          <End Role="Электромобили" Type="Self.Электромобили" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Кузов" Type="Self.Кузов" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Электромобили">
+              <PropertyRef Name="Код_электромобиля" />
+            </Principal>
+            <Dependent Role="Кузов">
+              <PropertyRef Name="Код_электромобиля" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Характери__Код_э__3B75D760">
+          <End Role="Электромобили" Type="Self.Электромобили" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Характеристики" Type="Self.Характеристики" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Электромобили">
+              <PropertyRef Name="Код_электромобиля" />
+            </Principal>
+            <Dependent Role="Характеристики">
+              <PropertyRef Name="Код_электромобиля" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ZenDriveEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Заявки_на_тест_драйв" EntityType="Self.Заявки_на_тест_драйв" />
+          <EntitySet Name="Кузов" EntityType="Self.Кузов" />
+          <EntitySet Name="Характеристики" EntityType="Self.Характеристики" />
+          <EntitySet Name="Электромобили" EntityType="Self.Электромобили" />
+          <AssociationSet Name="FK__Заявки_на__Код_э__47DBAE45" Association="Self.FK__Заявки_на__Код_э__47DBAE45">
+            <End Role="Электромобили" EntitySet="Электромобили" />
+            <End Role="Заявки_на_тест_драйв" EntitySet="Заявки_на_тест_драйв" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Кузов__Код_элект__412EB0B6" Association="Self.FK__Кузов__Код_элект__412EB0B6">
+            <End Role="Электромобили" EntitySet="Электромобили" />
+            <End Role="Кузов" EntitySet="Кузов" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Характери__Код_э__3B75D760" Association="Self.FK__Характери__Код_э__3B75D760">
+            <End Role="Электромобили" EntitySet="Электромобили" />
+            <End Role="Характеристики" EntitySet="Характеристики" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище ZenDriveModelContainer" CdmEntityContainer="ZenDriveEntities">
+          <EntitySetMapping Name="Заявки_на_тест_драйв">
+            <EntityTypeMapping TypeName="ZenDriveModel.Заявки_на_тест_драйв">
+              <MappingFragment StoreEntitySet="Заявки_на_тест_драйв">
+                <ScalarProperty Name="Код_заявки" ColumnName="Код_заявки" />
+                <ScalarProperty Name="Код_электромобиля" ColumnName="Код_электромобиля" />
+                <ScalarProperty Name="имя" ColumnName="имя" />
+                <ScalarProperty Name="e_mail" ColumnName="e_mail" />
+                <ScalarProperty Name="телефон" ColumnName="телефон" />
+                <ScalarProperty Name="дата_заявки" ColumnName="дата_заявки" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Кузов">
+            <EntityTypeMapping TypeName="ZenDriveModel.Кузов">
+              <MappingFragment StoreEntitySet="Кузов">
+                <ScalarProperty Name="Код_кузова" ColumnName="Код_кузова" />
+                <ScalarProperty Name="Код_электромобиля" ColumnName="Код_электромобиля" />
+                <ScalarProperty Name="длина" ColumnName="длина" />
+                <ScalarProperty Name="ширина" ColumnName="ширина" />
+                <ScalarProperty Name="высота" ColumnName="высота" />
+                <ScalarProperty Name="колесная_база" ColumnName="колесная_база" />
+                <ScalarProperty Name="шины" ColumnName="шины" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Характеристики">
+            <EntityTypeMapping TypeName="ZenDriveModel.Характеристики">
+              <MappingFragment StoreEntitySet="Характеристики">
+                <ScalarProperty Name="Код_характеристики" ColumnName="Код_характеристики" />
+                <ScalarProperty Name="Код_электромобиля" ColumnName="Код_электромобиля" />
+                <ScalarProperty Name="тип_двигателя" ColumnName="тип_двигателя" />
+                <ScalarProperty Name="мощность_электромотора" ColumnName="мощность_электромотора" />
+                <ScalarProperty Name="запас_хода" ColumnName="запас_хода" />
+                <ScalarProperty Name="емкость_батареи" ColumnName="емкость_батареи" />
+                <ScalarProperty Name="привод" ColumnName="привод" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Электромобили">
+            <EntityTypeMapping TypeName="ZenDriveModel.Электромобили">
+              <MappingFragment StoreEntitySet="Электромобили">
+                <ScalarProperty Name="Код_электромобиля" ColumnName="Код_электромобиля" />
+                <ScalarProperty Name="Название" ColumnName="Название" />
+                <ScalarProperty Name="Наличие" ColumnName="Наличие" />
+                <ScalarProperty Name="Цена" ColumnName="Цена" />
+                <ScalarProperty Name="Фото1" ColumnName="Фото1" />
+                <ScalarProperty Name="Фото2" ColumnName="Фото2" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

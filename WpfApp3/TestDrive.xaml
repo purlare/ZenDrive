@@ -1,0 +1,116 @@
+﻿<Page x:Class="WpfApp3.TestDrive"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:WpfApp3"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="TestDrive">
+    <Page.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+
+        <Style x:Key="CommonButtonStyle" BasedOn="{StaticResource {x:Type Button}}" TargetType="Button">
+            <Setter Property="Control.Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="10" Background="#001d18" BorderBrush="White" BorderThickness="1">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" TextElement.Foreground="White"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="ResetButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Margin" Value="0,0,0,10"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Width" Value="150"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="10">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="BackStyle" TargetType="Grid">
+            <Setter Property="Background">
+                <Setter.Value>
+                    <ImageBrush ImageSource="Pictures/fon.jpg"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Page.Resources>
+
+    <Grid Style="{StaticResource BackStyle}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+        <DataGrid x:Name="Filters" Grid.Column="0" Grid.Row="0" Margin="246,88,110,52" AutoGenerateColumns="False" IsReadOnly="True" SelectionChanged="Filters_SelectionChanged">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Номер заявки" Binding="{Binding Path=Код_заявки}" FontSize="19" />
+                <DataGridTextColumn Header="Название электромобиля" Binding="{Binding Path=Электромобили.Название}" FontSize="19" />
+                <DataGridTextColumn Header="Имя клиента" Binding="{Binding Path=имя}" FontSize="19" />
+                <DataGridTextColumn Header="Email" Binding="{Binding e_mail}" FontSize="19" />
+                <DataGridTextColumn Header="Телефон" Binding="{Binding телефон}" FontSize="19" />
+                <DataGridTextColumn Header="Дата заявки" Binding="{Binding дата_заявки, StringFormat='dd.MM.yyyy'}" FontSize="19" />
+                <DataGridTextColumn Header="Наличие машины" Binding="{Binding Path=Электромобили.Наличие}" FontSize="19" />
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Margin="190,10,-709,0" Height="58" Grid.ColumnSpan="2">
+            <Border BorderBrush="White" BorderThickness="1" CornerRadius="5" Width="381" Height="33">
+                <Grid Height="32" Margin="47,0,-129,-3">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="14*"/>
+                        <RowDefinition Height="3*"/>
+                        <RowDefinition Height="4*"/>
+                        <RowDefinition Height="11*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Image Source="Pictures/Poisk.png" Height="24" VerticalAlignment="Top" Margin="-32,2,37,0" RenderTransformOrigin="0.25,0.229" Grid.RowSpan="4">
+                    </Image>
+                    <TextBox x:Name="TxtSearchName" Margin="21,4,-281,0" Foreground="White" Text="Поиск" Background="Transparent" BorderThickness="0" FontSize="16" Grid.ColumnSpan="2" TextChanged="TxtSearchName_TextChanged" GotFocus="TxtSearchName_GotFocus" LostFocus="TxtSearchName_LostFocus" Grid.RowSpan="4"/>
+                </Grid>
+            </Border>
+            <Border BorderBrush="Transparent" BorderThickness="1" Width="534"/>
+            <TextBlock x:Name="TotalRecordsTextBlock" Text="Всего записей: " Foreground="White" FontSize="19" Height="25" Width="376" FontWeight="Bold"/>
+        </StackPanel>
+
+        <StackPanel Orientation="Vertical" VerticalAlignment="Top" Margin="1400,68,10,0" Height="407" Grid.ColumnSpan="2">
+            <TextBlock Text="Фильтр по наличию:" Foreground="White" FontSize="20" Width="240" FontWeight="Bold"/>
+            <ComboBox x:Name="AvailabilityComboBox" Margin="0,0,0,10" Height="27" Width="190" FontSize="18" SelectedIndex="0">
+                <ComboBoxItem Content="Все"/>
+                <ComboBoxItem Content="Да"/>
+                <ComboBoxItem Content="Под заказ"/>
+            </ComboBox>
+
+            <TextBlock Text="Выберите диапазон даты:" Foreground="White" FontSize="18" Width="260" FontWeight="Bold"/>
+            <DatePicker x:Name="StartDatePicker" SelectedDateChanged="DatePicker_SelectedDateChanged" Margin="0,0,0,10" Width="127" Height="30" FontSize="14" />
+            <DatePicker x:Name="EndDatePicker" SelectedDateChanged="DatePicker_SelectedDateChanged" Margin="0,0,0,10" Width="128" Height="28" FontSize="14"/>
+
+            <Button Content="Сбросить фильтры" Margin="0,0,0,10" Height="25" Width="178" FontSize="16" Click="BtnResetFilters_Click" Style="{StaticResource ResetButtonStyle}"/>
+            <Button x:Name="BtnEdit" Content="Редактировать" Margin="0,0,0,10" Height="40" Width="190" FontSize="18" Style="{StaticResource CommonButtonStyle}" Click="BtnEdit_Click"/>
+            <Button x:Name="BtnAdd" Content="Добавить" Margin="0,0,0,10" Height="40" Width="190" FontSize="18" Style="{StaticResource CommonButtonStyle}"/>
+            <Button x:Name="BtnDelete" Content="Удалить" Margin="0,0,0,10" Height="40" Width="190" FontSize="18" Style="{StaticResource CommonButtonStyle}" Click="BtnDelete_Click"/>
+            <Button x:Name="BtnExportToWord" Content="Вывод в Word" Margin="0,0,0,10" Height="40" Width="190" FontSize="18" Style="{StaticResource CommonButtonStyle}" Click="BtnExportToWord_Click"/>
+        </StackPanel>
+    </Grid>
+</Page>
+

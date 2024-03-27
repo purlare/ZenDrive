@@ -1,0 +1,111 @@
+﻿<Page x:Class="WpfApp3.Katalog"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:local="clr-namespace:WpfApp3"
+      mc:Ignorable="d"
+      Title="Каталог" Height="Auto" Width="Auto" Background="White">
+    <Page.Resources>
+        <Style x:Key="ButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="Black"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1" CornerRadius="10">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Page.Resources>
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Image Source="Pictures/Главная.jpeg" HorizontalAlignment="Left" VerticalAlignment="Top" Height="227" Width="2000" Margin="-45,-29,0,0"/>
+
+            <TextBlock Text="Каталог электромобилей" FontSize="32" FontWeight="Bold" Foreground="White" Margin="50,6,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Height="67" Width="428"/>
+            <TextBlock TextWrapping="Wrap" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="50,49,0,0" FontSize="22" Foreground="White" MaxWidth="1000" Width="1046" Height="171" Grid.RowSpan="2">
+                В данном каталоге представлены Китайские электромобили премиум-класса, доступные для приобретения с гарантией от ZenDrive. Каждый автомобиль сопровождается гарантийным договором и сервисной книжкой, соответствующими стандартам производителя, обеспечивая вам уверенность в качестве и надежности при эксплуатации в России.
+            </TextBlock>
+
+            <StackPanel Grid.Row="1" Orientation="Vertical" HorizontalAlignment="Left" Margin="1472,22,0,17" Width="473">
+                <TextBlock Text="Сортировать по цене:" FontSize="20" Height="27" Width="474" Margin="0,0,0,5"/>
+                <Button Content=" ↑ По возрастанию" FontSize="20" Margin="0,5,0,0" Click="SortAscendingButton_Click" Height="36" Width="220" Style="{StaticResource ButtonStyle}"/>
+                <Button Content="↓ По убыванию" FontSize="20" Margin="0,5,0,0" Click="SortDescendingButton_Click" Height="33" Width="220" Style="{StaticResource ButtonStyle}"/>
+            </StackPanel>
+
+            <Image Source="Pictures/search.png" HorizontalAlignment="Left" VerticalAlignment="Top"  Margin="72,40,0,0" Height="48" Width="33" Grid.Row="1"/>
+
+            <TextBox x:Name="SearchTextBox" Grid.Row="1" Margin="125,37,0,0" Width="370" Height="38" VerticalAlignment="Top" HorizontalAlignment="Left" TextChanged="SearchTextBox_TextChanged" GotFocus="SearchTextBox_GotFocus">
+                <TextBox.Style>
+                    <Style TargetType="TextBox">
+                        <Setter Property="Foreground" Value="Black"/>
+                        <Setter Property="FontSize" Value="16"/>
+                        <Setter Property="Padding" Value="5"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type TextBox}">
+                                    <Border BorderThickness="1" BorderBrush="Black" CornerRadius="10">
+                                        <ScrollViewer x:Name="PART_ContentHost" />
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </TextBox.Style>
+                <TextBox.Triggers>
+                    <EventTrigger RoutedEvent="GotFocus">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="SearchLabel" Storyboard.TargetProperty="Visibility">
+                                    <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Collapsed}" />
+                                </ObjectAnimationUsingKeyFrames>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </TextBox.Triggers>
+            </TextBox>
+            <TextBlock x:Name="SearchLabel" Text="Найти по названию" Foreground="Gray" FontSize="18" Margin="150,44,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" />
+            <TextBlock x:Name="NoResultsTextBlock" Text="Нет результатов" FontSize="24" Foreground="Gray" HorizontalAlignment="Center" VerticalAlignment="Top" Visibility="Collapsed" Grid.Row="2" Margin="0,20,0,0"/>
+
+            <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Left" Margin="1472,10,0,51" Width="382">
+                <TextBlock Text="Фильтр по наличию:" FontSize="20"  VerticalAlignment="Center" Width="206"/>
+                <ComboBox x:Name="AvailabilityFilterComboBox" FontSize="20" SelectedIndex="0" SelectionChanged="AvailabilityFilterComboBox_SelectionChanged" Width="134" Height="32">
+                    <ComboBoxItem Content="Все"/>
+                    <ComboBoxItem Content="Да"/>
+                    <ComboBoxItem Content="Под заказ"/>
+                </ComboBox>
+            </StackPanel>
+
+            <Button Grid.Row="2" Content="Записаться на тест-драйв" FontSize="22" Margin="0,61,83,0" Click="ScheduleTestDrive_Click" Width="348" HorizontalAlignment="Right" Grid.RowSpan="2" Height="52" VerticalAlignment="Top" >
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Background" Value="#013d36"/>
+                        <Setter Property="Foreground" Value="White"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="Button">
+                                    <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1" CornerRadius="10">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </Button.Style>
+            </Button>
+
+            <StackPanel x:Name="ContentStackPanel" Grid.Row="3" Margin="0,13,0,0" >
+            </StackPanel>
+        </Grid>
+    </ScrollViewer>
+</Page>

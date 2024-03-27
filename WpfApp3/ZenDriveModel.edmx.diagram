@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="0b42a6820ad2474e880f1f77f60cf354" Name="Diagram1">
+        <EntityTypeShape EntityType="ZenDriveModel.Заявки_на_тест_драйв" Width="1.5" PointX="3" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ZenDriveModel.Кузов" Width="1.5" PointX="3" PointY="4.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ZenDriveModel.Характеристики" Width="1.5" PointX="3" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ZenDriveModel.Электромобили" Width="1.5" PointX="0.75" PointY="4.375" IsExpanded="true" />
+        <AssociationConnector Association="ZenDriveModel.FK__Заявки_на__Код_э__47DBAE45" ManuallyRouted="false" />
+        <AssociationConnector Association="ZenDriveModel.FK__Кузов__Код_элект__412EB0B6" ManuallyRouted="false" />
+        <AssociationConnector Association="ZenDriveModel.FK__Характери__Код_э__3B75D760" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
